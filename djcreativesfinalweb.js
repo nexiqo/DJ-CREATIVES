@@ -132,8 +132,43 @@ function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            const href = this.getAttribute('href');
+            
+            // Check if this is a portfolio filter link
+            const filterValue = this.dataset.filter;
+            if (href === '#portfolio' && filterValue) {
+                // Scroll to portfolio first
+                const target = document.querySelector(href);
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                    
+                    // Wait a bit for scroll to start, then apply filter
+                    setTimeout(() => {
+                        // Trigger the portfolio filter
+                        const filterButtons = document.querySelectorAll('.filter-btn');
+                        const portfolioItems = document.querySelectorAll('.portfolio-item');
+                        
+                        // Find and click the matching filter button
+                        filterButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.dataset.filter === filterValue) {
+                                btn.classList.add('active');
+                            }
+                        });
+                        
+                        // Apply filter to portfolio items
+                        portfolioItems.forEach(item => {
+                            const isVisible = filterValue === 'all' || item.dataset.category === filterValue;
+                            item.style.display = isVisible ? 'block' : 'none';
+                            setTimeout(() => item.classList.toggle('visible', isVisible), 10);
+                        });
+                    }, 500);
+                }
+            } else {
+                // Regular smooth scroll
+                const target = document.querySelector(href);
+                if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            }
         });
     });
 }
@@ -323,33 +358,109 @@ function showNotification(message, type = 'info') {
 
 function initializeBeforeAfterModal() {
     const comparisonModal = document.querySelector('.comparison-modal');
-    const lightboxModal = document.getElementById('lightbox-modal'); // This can be left as is if you plan to use it.
+    const lightboxModal = document.getElementById('lightbox-modal');
     if (!comparisonModal) return;
 
     const beforeImage = document.getElementById('before-image');
     const afterImage = document.getElementById('after-image');
-    const closeButtons = document.querySelectorAll('.modal-close');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const closeButtons = document.querySelectorAll('.modal-close, .lightbox-close');
 
     document.querySelectorAll('.portfolio-item').forEach(item => {
         item.addEventListener('click', () => {
             const images = item.querySelectorAll('.double-image img');
+            
             if (images.length === 2) {
+                // Show before/after comparison
                 beforeImage.src = images[0].src;
                 afterImage.src = images[1].src;
                 comparisonModal.classList.add('active');
+            } else {
+                // Show single image in lightbox
+                const thumbnail = item.querySelector('.portfolio-thumbnail');
+                if (thumbnail) {
+                    lightboxImage.src = thumbnail.src;
+                    lightboxModal.classList.add('active');
+                } else if (images.length > 0) {
+                    lightboxImage.src = images[0].src;
+                    lightboxModal.classList.add('active');
+                }
             }
+        });
+    });
+
+    // Add click functionality for individual images within double-image containers
+    // This works for ALL portfolio sections: digitizing, namedrop, artwork, image-edit
+    document.querySelectorAll('.double-image img').forEach(img => {
+        img.style.cursor = 'pointer'; // Add pointer cursor
+        img.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent portfolio item click
+            openFullscreenModal(img.src);
         });
     });
 
     const closeModal = () => {
         comparisonModal.classList.remove('active');
-        if (lightboxModal) lightboxModal.classList.remove('active'); // Also close lightbox if open
+        if (lightboxModal) lightboxModal.classList.remove('active');
     };
 
     closeButtons.forEach(button => button.addEventListener('click', closeModal));
-    comparisonModal.addEventListener('click', e => {
-        if (e.target === comparisonModal) {
-            closeModal();
+    
+    // Close modals on background click
+    [comparisonModal, lightboxModal].forEach(modal => {
+        if (modal) {
+            modal.addEventListener('click', e => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
         }
     });
 }
+
+// Fullscreen modal functionality
+function openFullscreenModal(imageSrc) {
+    const fullscreenModal = document.getElementById('fullscreen-modal');
+    const fullscreenImage = document.getElementById('fullscreen-image');
+    
+    if (fullscreenModal && fullscreenImage) {
+        fullscreenImage.src = imageSrc;
+        fullscreenModal.classList.add('active');
+        
+        // Close on ESC key
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') {
+                closeFullscreenModal();
+            }
+        };
+        
+        document.addEventListener('keydown', handleEsc);
+        
+        // Close on background click
+        fullscreenModal.addEventListener('click', (e) => {
+            if (e.target === fullscreenModal) {
+                closeFullscreenModal();
+            }
+        });
+    }
+}
+
+function closeFullscreenModal() {
+    const fullscreenModal = document.getElementById('fullscreen-modal');
+    if (fullscreenModal) {
+        fullscreenModal.classList.remove('active');
+        document.removeEventListener('keydown', handleEsc);
+    }
+}
+
+// Initialize all functionality
+document.addEventListener('DOMContentLoaded', () => {
+    initPreloader();
+    initParticles();
+    initScrollEffects();
+    initSmoothScroll();
+    initPortfolioFilter();
+    initFormSubmission();
+    initTestimonials();
+    initBeforeAfterModal();
+});
