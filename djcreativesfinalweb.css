@@ -3067,12 +3067,336 @@ section {
 
 @keyframes pulse-whatsapp {
     0% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+        transform: scale(1);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
     }
-    70% {
-        box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+        transform: scale(1);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* ===================================
+   Mobile Responsive Design
+   =================================== */
+
+/* Large Tablets */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .nav-container {
+        padding: 0 30px;
+    }
+    
+    .hero-title {
+        font-size: 6rem;
+    }
+    
+    .section-title {
+        font-size: 4rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .service-card {
+        padding: 40px;
+    }
+    
+    .service-number {
+        font-size: 4rem;
+    }
+}
+
+/* Small Tablets */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    .nav-container {
+        padding: 0 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px 20px;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .hero {
+        padding: 100px 0 80px;
+        min-height: auto;
+    }
+    
+    .hero-content {
+        margin-left: 0;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+        line-height: 1.1;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .service-card {
+        padding: 30px;
+    }
+    
+    .service-number {
+        font-size: 3.5rem;
+    }
+    
+    .service-title {
+        font-size: 1.5rem;
+    }
+    
+    .service-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .about-visual {
+        grid-template-columns: 1fr;
+    }
+    
+    .digitizing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    
+    .hero {
+        padding: 80px 0 60px;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        line-height: 1.2;
+    }
+    
+    .hero-description {
+        font-size: 0.95rem;
+    }
+    
+    .hero-features {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .hero-feature {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
+    
+    .service-card {
+        padding: 25px;
+    }
+    
+    .service-number {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+    
+    .service-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .service-description {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+    
+    .service-features li {
+        font-size: 0.85rem;
+        padding: 6px 0;
+        padding-left: 20px;
+    }
+    
+    .service-link {
+        font-size: 0.8rem;
+        padding: 15px 25px;
+    }
+    
+    .testimonial-card {
+        padding: 25px;
+    }
+    
+    .about-features {
+        gap: 20px;
+    }
+    
+    .feature-item {
+        gap: 15px;
+    }
+    
+    .feature-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .feature-text h4 {
+        font-size: 1rem;
+    }
+    
+    .feature-text p {
+        font-size: 0.85rem;
+    }
+    
+    .visual-box {
+        padding: 20px;
+    }
+    
+    .box-content h3 {
+        font-size: 2.5rem;
+    }
+    
+    .digitizing-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .digitizing-feature {
+        padding: 25px;
+    }
+    
+    .feature-number {
+        font-size: 2.5rem;
+    }
+    
+    .digitizing-feature h3 {
+        font-size: 1.2rem;
+    }
+    
+    .digitizing-feature p {
+        font-size: 0.85rem;
+    }
+    
+    /* Preloader Mobile Fixes */
+    .preloader {
+        padding: 20px;
+    }
+    
+    .glitch {
+        font-size: 3rem;
+    }
+    
+    .preloader-subtitle {
+        font-size: 1rem;
+    }
+    
+    .preloader-bar {
+        width: 300px;
+    }
+    
+    .preloader-text {
+        font-size: 0.8rem;
+    }
+    
+    /* WhatsApp Button Mobile */
+    .whatsapp-chat-button {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .whatsapp-icon {
+        width: 28px;
+        height: 28px;
     }
 }

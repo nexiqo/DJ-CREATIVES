@@ -46,6 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // COMPONENT INITIALIZATION FUNCTIONS
 // ===================================
 
+function initMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (!hamburger || !navMenu) return;
+    
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on links
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+        }
+    });
+}
+
 function initParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
