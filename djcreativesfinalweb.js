@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallax();
     startCountdown();
     initMagneticButtons();
-    createScrollProgress();
+    // createScrollProgress();
     initFormSubmission();
     initializeBeforeAfterModal();
 
@@ -79,7 +79,7 @@ function initParticles() {
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        particle.style.cssText = `position: absolute; width: ${Math.random() * 3 + 1}px; height: ${Math.random() * 3 + 1}px; background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2}); border-radius: 50%; left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; animation: float ${Math.random() * 10 + 10}s linear infinite; animation-delay: ${Math.random() * 5}s;`;
+        particle.style.cssText = `position: absolute; width: ${Math.random() * 3 + 1}px; height: ${Math.random() * 3 + 1}px; background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2}); border-radius: 50%; left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; animation: float ${Math.random() * 10 + 20}s linear infinite; animation-delay: ${Math.random() * 5}s;`;
         particlesContainer.appendChild(particle);
     }
 }
@@ -217,7 +217,7 @@ function initAnimatedCounters() {
         const numericTarget = parseInt(target, 10);
 
         let start = 0;
-        const duration = 2000;
+        const duration = 3000;
         const increment = numericTarget / (duration / 16);
 
         const timer = setInterval(() => {
@@ -271,7 +271,7 @@ function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('revealed'), index * 50);
+                setTimeout(() => entry.target.classList.add('revealed'), index * 100);
                 observer.unobserve(entry.target);
             }
         });
@@ -340,14 +340,14 @@ function initMagneticButtons() {
     });
 }
 
-function createScrollProgress() {
-    const bar = document.createElement('div');
-    bar.className = 'scroll-progress';
-    document.body.appendChild(bar);
-    window.addEventListener('scroll', () => {
-        bar.style.width = `${(window.pageYOffset / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100}%`;
-    });
-}
+// function createScrollProgress() {
+//     const bar = document.createElement('div');
+//     bar.className = 'scroll-progress';
+//     document.body.appendChild(bar);
+//     window.addEventListener('scroll', () => {
+//         bar.style.width = `${(window.pageYOffset / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100}%`;
+//     });
+// }
 
 function initFormSubmission() {
     const contactForm = document.querySelector('.contact-form');
